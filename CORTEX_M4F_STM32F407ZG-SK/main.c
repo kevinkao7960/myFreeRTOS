@@ -27,7 +27,9 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "fractal.h"
 #include "game.h"
+
 
 #include "FreeRTOS.h"
 #include "task.h"
@@ -35,6 +37,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 /** @addtogroup Template
   * @{
   */ 
@@ -56,6 +59,7 @@ prvInit()
 	LCD_LayerInit();
 	LCD_SetLayer( LCD_FOREGROUND_LAYER );
 	LCD_Clear( LCD_COLOR_BLACK );
+
 	LCD_SetTextColor( LCD_COLOR_WHITE );
 
 	//Button
@@ -95,10 +99,14 @@ static void GameTask( void *pvParameters )
 	}
 }
 
+
+
+
 //Main Function
 int main(void)
 {
 	prvInit();
+	Background_Update();
 
 	if( STM_EVAL_PBGetState( BUTTON_USER ) )
 		demoMode = 1;
@@ -107,7 +115,7 @@ int main(void)
 	xTaskCreate( GameEventTask1, (signed char*) "GameEventTask1", 128, NULL, tskIDLE_PRIORITY + 1, NULL );
 	xTaskCreate( GameEventTask2, (signed char*) "GameEventTask2", 128, NULL, tskIDLE_PRIORITY + 1, NULL );
 	xTaskCreate( GameEventTask3, (signed char*) "GameEventTask3", 128, NULL, tskIDLE_PRIORITY + 1, NULL );
-
+	
 	//Call Scheduler
 	vTaskStartScheduler();
 }
