@@ -1,5 +1,6 @@
 #include "game.h"
 #include "main.h"
+#include "fractal.h"
 
 #include "FreeRTOS.h"
 #include "task.h"
@@ -100,10 +101,27 @@ GAME_Update()
 			player1X = LCD_PIXEL_WIDTH - player1W;
 
 		//Player2
-		if( player2IsReversed )
+		/*if( player2IsReversed )
 			player2X -= 5;
 		else
 			player2X += 5;
+
+		if( player2X <= 0 )
+			player2X = 0;
+		else if( player2X + player2W >= LCD_PIXEL_WIDTH )
+			player2X = LCD_PIXEL_WIDTH - player2W;*/
+
+		if( ballVY > 0 ){
+			if( player2X + player2W/2 < ballX + ballSize/2 ){
+				//player1X += 2;
+				player2X += 8;
+			}
+			else{
+				//player1X -= 2;
+				player2X -= 8;
+			}
+
+		}
 
 		if( player2X <= 0 )
 			player2X = 0;
